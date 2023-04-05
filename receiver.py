@@ -2,7 +2,7 @@ import socket
 import time
 
 IP = "localhost"
-PORT = 1234
+PORT = 1235
 
 sk = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 

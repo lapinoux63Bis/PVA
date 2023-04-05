@@ -4,6 +4,8 @@
 #Libraries
 import sys
 import smtplib
+import time
+import csv
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -18,7 +20,7 @@ EMAIL_HTML_TEMPLATE="""<html>
 				  <body>
 					<p style ="margin: 5px 0;line-height: 25px;">coucou {},<br>
 					<br>
-					Allons manger Miam j'ai faim.
+					test de message automatique
 					<br>
 					{}
 					<br>
@@ -35,7 +37,7 @@ class EmailSenderClass:
 	def __init__(self):
 		""" """
 		self.logaddr = "bagmanf1@gmail.com"
-		self.fromaddr = "gabriel.flotte@hotmail.fr"# alias
+		self.fromaddr = "bagmanf1@gmail.com"# alias
 		self.password = "kofrlfeisitwaqwy"#
 
 
@@ -43,10 +45,12 @@ class EmailSenderClass:
 		# Send the message via local SMTP server.
 		server = smtplib.SMTP('smtp.gmail.com', 587)
 		server.starttls()
+		timestamp1 =time.time()
 		server.login(self.logaddr, self.password)
 		text = msg.as_string()
 		server.sendmail(self.fromaddr, toaddr, text)
 		server.quit()
+		return timestamp1
 
 
 
@@ -56,7 +60,7 @@ class EmailSenderClass:
 
 		msg['From'] =  "Me<"+self.fromaddr+">"
 		msg['To'] = destinationAddress
-		msg['Subject'] = "Hello mail"
+		msg['Subject'] = "TEST auto"
 
 		hostname=sys.platform
 
@@ -69,10 +73,14 @@ class EmailSenderClass:
 		msg.attach(MIMEText(txt, 'html'))
 
 		print("Send email from {} to {}".format(self.fromaddr,destinationAddress))
-		self.sendMessageViaServer(destinationAddress,msg)
+		timestamp1 = self.sendMessageViaServer(destinationAddress,msg)
+		timestamp =time.time()
+		return timestamp, timestamp1
 
 
-
-if __name__ == "__main__":
-	email= EmailSenderClass()
-	email.sendHtmlEmailTo("Admin","gabriel.flotte@hotmail.fr","Ceci est un mail automatique envoyé à partir d'un script Python. BISOUS <3")
+with open("registre_actions.csv", "w", newline='') as csvfile:
+	write = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+	if __name__ == "__main__":
+		email= EmailSenderClass()
+		timestamp, timestamp1 = email.sendHtmlEmailTo("MOI","gabriel.flotte@hotmail.fr","mail automatique.'")
+		write.writerow([timestamp1, timestamp, "", "", "", "smtp", ""])
