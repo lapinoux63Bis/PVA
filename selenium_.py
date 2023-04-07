@@ -1,10 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
+import time
+import csv
+
 # Step 1) Open Firefox
 browser = webdriver.Firefox()
 WebDriverWait( browser, 5 )
 # Step 2) Navigate to Facebook
+timestamp =  time.time()
 browser.get("http://www.facebook.com")
 browser.find_elements(By.XPATH, "//button[contains(string(), 'Autoriser les cookies essentiels et optionnels')]")[0].click()
 # Step 3) Search & Enter the Email or Phone field & Enter Password
@@ -19,7 +23,13 @@ wait = WebDriverWait( browser, 20 )
 
 browser.quit()
 
+timestamp1 = time.time()
 
+with open("registre_actions.csv", "a", newline='') as csvfile:
+    write = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    write.writerow([timestamp, timestamp1, "", "", "", "", "", "Selenium"])
+    
+    
 # from selenium import webdriver
 # import time
 # from selenium.webdriver.common.by import By
