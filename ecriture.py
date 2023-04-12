@@ -41,9 +41,10 @@ with open("registre_transmissions.csv", "w", newline ='') as csvfile:
             src_ip = 'Unknown'
             dst_ip = 'Unknown'
         else:
+            len = packet.wirelen
             src_ip = packet[IP].src
             dst_ip = packet[IP].dst
 
         #print('IP source : ', src_ip, '| IP Reception : ', dst_ip)
         #print('\n')
-        write.writerow([timestamp, src_port, dst_port, proto, src_ip, dst_ip])
+        write.writerow([timestamp, src_port, dst_port, proto, src_ip, dst_ip, len])

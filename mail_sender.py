@@ -18,7 +18,7 @@ EMAIL_HTML_TEMPLATE="""<html>
 				  <head>
 				  </head>
 				  <body>
-					<p style ="margin: 5px 0;line-height: 25px;">coucou {},<br>
+					<p style ="margin: 5px 0;line-height: 25px;">bonjour {},<br>
 					<br>
 					test de message automatique
 					<br>
@@ -74,7 +74,7 @@ class EmailSenderClass:
 
 		print("Send email from {} to {}".format(self.fromaddr,destinationAddress))
 		timestamp1 = self.sendMessageViaServer(destinationAddress,msg)
-		timestamp =time.time()
+		timestamp = time.time()
 		return timestamp, timestamp1
 
 
@@ -82,5 +82,5 @@ with open("registre_actions.csv", "w", newline='') as csvfile:
 	write = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	if __name__ == "__main__":
 		email= EmailSenderClass()
-		timestamp, timestamp1 = email.sendHtmlEmailTo("MOI","gabriel.flotte@hotmail.fr","mail automatique.'")
+		timestamp, timestamp1 = email.sendHtmlEmailTo("MOI","bagmanf1@gmail.com","mail automatique.'")
 		write.writerow([timestamp1, timestamp, "", "", "", "smtp", ""])
