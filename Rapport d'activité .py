@@ -17,9 +17,9 @@ with open("Rapport d'activité.txt", "w" ) as f :
                 f.write("Envoie d'un email à ")
                 f.write(row[0] + "\n")
              
-            elif row[1] == "8080" :
+            elif row[7] == "eth:ethertype:ip:tcp:tls" :
                 f.write("Connexion internet à l'adresse : ")
-                f.write(row[4] + "\n")
+                f.write(row[2] + "\n")
                 
                 
                 
